@@ -23,6 +23,18 @@ In order to set up the 2 VMs with vagrant (cbernazeS & cbernazeSW) you need to r
 > ==> cbernazeS: Running 'pre-boot' VM customizations...A customization command failed:["modifyvm", :id, "--name", "cbernazeS"]The following error was experienced:#<Vagrant::Errors::VBoxManageError:"There was an error while executing `VBoxManage`, a CLI used by Vagrant\nfor controlling VirtualBox. The command and stderr is shown below.\n\nCommand: [\"modifyvm\", \"c5272bf6-a1c5-4783-95a1-7d5cb7e0932f\", \"--name\", \"cbernazeS\"]\n\nStderr: VBoxManage: error: Could not rename the directory '/home/iot/VirtualBox VMs/p1_cbernazeS_1758108675963_6431' to '/home/iot/VirtualBox VMs/cbernazeS' to save the settings file (VERR_ALREADY_EXISTS)\nVBoxManage: error: Details: code NS_ERROR_FAILURE (0x80004005), component SessionMachine, interface IMachine, callee nsISupports\nVBoxManage: error: Context: \"SaveSettings()\" at line 3640 of file VBoxManageModifyVM.cpp\n">Please fix this customization and try again.
 > **Check also that all VMs are removed in VirtualBox**
 
+
+#### P2
+
+> Problem I ran into : unexpected "(" in my k3s_server.sh script, I ran that script with sh in the Vagrantfile, it was supposed to be ran by bash
+
+In order to acces app1.com app2.com etc in the browser you need to add them to **/etc/hosts**
+```
+192.168.56.110 app1.com
+192.168.56.110 app2.com
+192.168.56.110 app3.com
+```
+
 ### Documentation
 #### GLOBAL : Kubectl commands cheat sheet
 - [Kubectl](https://spacelift.io/blog/kubernetes-cheat-sheet) & (https://spacelift.io/blog/kubectl-apply-vs-create) & (https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#-strong-getting-started-strong-)
