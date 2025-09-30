@@ -40,7 +40,7 @@ else
     fi
 fi
 
-CONFIG_DIR="/vagrant/config"
+CONFIG_DIR="/vagrant/confs"
 
 apps=("app-one:app1" "app-two:app2" "app-three:app3")
 

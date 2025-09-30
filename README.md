@@ -35,6 +35,15 @@ In order to acces app1.com app2.com etc in the browser you need to add them to *
 192.168.56.110 app3.com
 ```
 
+#### P3
+
+To create a k3d cluster use this command:
+```k3d cluster create mycluster```
+
+To delete a k3d cluster use this command:
+```k3d cluster delete mycluster```
+
+
 ### Documentation
 #### GLOBAL : Kubectl commands cheat sheet
 - [Kubectl](https://spacelift.io/blog/kubernetes-cheat-sheet) & (https://spacelift.io/blog/kubectl-apply-vs-create) & (https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#-strong-getting-started-strong-)
