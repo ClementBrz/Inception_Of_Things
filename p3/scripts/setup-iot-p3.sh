@@ -28,14 +28,24 @@ else
     echo -e "${B_GREEN}curl is now installed${RESET}"
 fi
 
-echo -e "${B_YELLOW}Installing docker on $(hostname)${RESET}"
+# Install ca-certificates
+if dpkg -l | grep ca-certificates; then
+    echo -e "${B_GREEN}ca-certificates is already installed${RESET}"
+    echo -e -n "${B_YELLOW}Do you want to update ca-certificates? Y/N:${RESET}"
+    read yesno
+    if [ "$yesno" = "y" ] || [ "$yesno" = "Y" ]; then
+        sudo update-ca-certificates
+    fi
+else
+    sudo apt-get install ca-certificates -y
+fi
 
-sudo apt-get install ca-certificates -y
-
+# Install docker
 if docker --version; then
     echo -e "${B_GREEN}Docker is already installed!${RESET}"
 else
     # Add Docker's official GPG key:
+    echo -e "${B_YELLOW}Installing docker on $(hostname)${RESET}"
     sudo install -m 0755 -d /etc/apt/keyrings
     sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
     sudo chmod a+r /etc/apt/keyrings/docker.asc
@@ -80,7 +90,7 @@ if [ "$yesno" = "y" ] || [ "$yesno" = "Y" ]; then
 fi
 
 # Install kubectl if necessary
-if kubectl version; then
+if kubectl version --client; then
     echo -e "${B_GREEN}kubectl is already installed!${RESET}"
 else
     if (uname -m | grep "x86_64"); then
@@ -151,5 +161,12 @@ fi
 
 # Forwarding port to be able to access the API server without having to expose it
 # It is accessible at https://localhost:8080
-kubectl port-forward --pod-running-timeout 2m svc/argocd-server -n argocd 8080:443
-
+echo -e "${B_ORANGE}Waiting for the argocd pods to be running${RESET}"
+status=1
+while [ $status == 1 ]
+do
+    if kubectl port-forward svc/argocd-server -n argocd 8080:443; then
+        status=0
+    fi
+    sleep 10
+done

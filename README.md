@@ -43,6 +43,8 @@ To create a k3d cluster use this command:
 To delete a k3d cluster use this command:
 ```k3d cluster delete mycluster```
 
+Current error
+> {"level":"fatal","msg":"rpc error: code = Unknown desc = error getting server version: failed to get server version: Get \"https://0.0.0.0:36515/version?timeout=32s\": dial tcp 0.0.0.0:36515: connect: connection refused","time":"2025-09-30T15:23:25+02:00"} argocd
 
 ### Documentation
 #### GLOBAL : Kubectl commands cheat sheet
