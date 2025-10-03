@@ -59,7 +59,7 @@ else
 
     # Install docker
     sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-    result_message "Docker was succesfully installed" "Installation of Docker failed"
+    result_message "Docker was successfully installed" "Installation of Docker failed"
     
     docker --version || {
         echo -e "${B_RED}Error: docker failed to install${RESET}"
@@ -114,7 +114,7 @@ fi
 
 # Install the latest version of k3d
 if curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash; then
-    echo -e "${B_GREEN}k3d latest release was successful installed${RESET}"
+    echo -e "${B_GREEN}k3d latest release was successfully installed${RESET}"
 else
     echo -e "${B_RED}Error: failed installation of k3d latest release${RESET}"
     exit 1
@@ -138,7 +138,7 @@ else
 fi
 
 if kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml; then
-    echo -e "${B_GREEN}ArgoCD services successufully installed!${RESET}"
+    echo -e "${B_GREEN}ArgoCD services successfully installed!${RESET}"
 else
     echo -e "${B_RED}Error: failure to install ArgoCD services${RESET}"
 fi
@@ -157,6 +157,13 @@ else
         echo -e "${B_RED}Error: failure to install ArgoCD CLI${RESET}"
         exit 1
     fi
+fi
+
+# Link argocd to our app
+if kubectl apply -f confs/application.yaml; then
+    echo -e "${B_GREEN}ArgoCD configuration successful!"
+else
+    echo -e "${B_RED}Error: failure to configure ArgoCD"
 fi
 
 # Forwarding port to be able to access the API server without having to expose it
