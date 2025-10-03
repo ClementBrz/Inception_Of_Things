@@ -4,12 +4,12 @@ metadata:
   name: argocd-app
   namespace: argocd
 spec:
-  project: development
+  project: default
 
   source:
-    repoURL: https://github.com/ClementBrz/cbernaze_IoT_k3d.git
+    repoURL: https://github.com/ClementBrz/Inception_Of_Things.git
     targetRevision: HEAD
-    path: manifests
+    path: p3/confs/dev
   
   destination:
     server: https://kubernetes.default.svc
