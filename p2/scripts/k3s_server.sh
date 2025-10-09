@@ -89,6 +89,8 @@ apply_yaml_files() {
 create_configmaps
 apply_yaml_files
 
+if [ grep -e app1 -e app2 -e app3 /etc/hosts | wc -l -eq 3 ]; then
+
 # sudo kubectl create configmap app-one-html --from-file=/vagrant/config/app1/index.html
 # sudo kubectl create configmap app-two-html --from-file=/vagrant/config/app2/index.html
 # sudo kubectl create configmap app-three-html --from-file=/vagrant/config/app3/index.html

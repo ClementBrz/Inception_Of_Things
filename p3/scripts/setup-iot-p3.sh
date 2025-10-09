@@ -166,14 +166,30 @@ else
     echo -e "${B_RED}Error: failure to configure ArgoCD"
 fi
 
-# Forwarding port to be able to access the API server without having to expose it
+# Forwarding ArgoCD's port to be able to access the API server without having to expose it
 # It is accessible at https://localhost:8080
 echo -e "${B_ORANGE}Waiting for the argocd pods to be running${RESET}"
 status=1
 while [ $status == 1 ]
 do
-    if kubectl port-forward svc/argocd-server -n argocd 8080:443; then
+    if kubectl port-forward svc/argocd-server -n argocd 8080:443 > argocd-port-forward.log 2>&1 & then
         status=0
+        echo -e "${B_GREEN}ArgoCD is now available at https://localhost:8080"
+    else
+        sleep 10
     fi
-    sleep 10
+done
+
+# Forwarding app's port to be able to access it
+# It is accessible at https://localhost:8888
+echo -e "${B_ORANGE}Waiting for the app's pods to be running${RESET}"
+status=1
+while [ $status == 1 ]
+do
+    if kubectl port-forward svc/wil-playground-service -n dev 8888:8888 > app-port-forward.log 2>&1 & then
+        status=0
+        echo -e "${B_GREEN}Your app is now available at https://localhost:8888"
+    else
+        sleep 10
+    fi
 done
