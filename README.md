@@ -6,6 +6,8 @@ For the projects to work properly, git clone the repo directly in the VM.
 
 #### P1:
 
+Before starting p1 you need to run ```p1/scripts/startup.sh``` so that necessary dependencies are installed for the project!
+
 In order to set up the 2 VMs with vagrant (cbernazeS & cbernazeSW) you need to run the commands with "sudo":
 
 `sudo vagrant up`

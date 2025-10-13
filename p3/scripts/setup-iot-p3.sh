@@ -9,6 +9,7 @@ RESET="\e[0m"
 
 SETGREY="echo -e -n "${RESET}${B_GREY}""
 
+CLUSTER_NAME="cluster-p3"
 result_message() {
     if [ $? -eq 0 ]; then
         echo -e "${B_GREEN}$1${RESET}"
@@ -18,7 +19,13 @@ result_message() {
     fi
 }
 
-sudo apt-get update && sudo apt-get upgrade -y
+sudo apt-get update
+
+echo -e -n "${B_YELLOW}Do you want to upgrade apt-get packages? Y/N:${RESET}"
+read yesno
+if [ "$yesno" = "y" ] || [ "$yesno" = "Y" ]; then
+    sudo apt-get upgrade -y
+fi
 
 # Install curl if necessary
 if command -v curl; then
@@ -121,12 +128,12 @@ else
 fi
 
 # Create our k3d cluster
-if k3d cluster list | grep cluster-p3; then
+if k3d cluster list | grep ${CLUSTER_NAME}; then
     echo -e "${B_GREEN}The k3d cluster for p3 has already been created${RESET}"
-elif k3d cluster create cluster-p3; then
-    echo -e "${B_GREEN}cluster-p3 created successfully!${RESET}"
+elif k3d cluster create ${CLUSTER_NAME}; then
+    echo -e "${B_GREEN}${CLUSTER_NAME} created successfully!${RESET}"
 else
-    echo -e "${B_RED}Error: failure to create cluster-p3${RESET}"
+    echo -e "${B_RED}Error: failure to create ${CLUSTER_NAME}${RESET}"
     exit 1
 fi
 
@@ -169,27 +176,21 @@ fi
 # Forwarding ArgoCD's port to be able to access the API server without having to expose it
 # It is accessible at https://localhost:8080
 echo -e "${B_ORANGE}Waiting for the argocd pods to be running${RESET}"
-status=1
-while [ $status == 1 ]
+while ! curl -s http://localhost:8080 >/dev/null
 do
-    if kubectl port-forward svc/argocd-server -n argocd 8080:443 > argocd-port-forward.log 2>&1 & then
-        status=0
-        echo -e "${B_GREEN}ArgoCD is now available at https://localhost:8080"
-    else
-        sleep 10
-    fi
+    kubectl port-forward svc/argocd-server -n argocd 8080:443 > argocd-port-forward.log 2>&1 &
+    sleep 10
 done
+echo -e "${B_GREEN}ArgoCD is now available at https://localhost:8080${RESET}"
+
+argocd admin initial-password -n argocd
 
 # Forwarding app's port to be able to access it
 # It is accessible at https://localhost:8888
 echo -e "${B_ORANGE}Waiting for the app's pods to be running${RESET}"
-status=1
-while [ $status == 1 ]
+while ! curl -s http://localhost:8888 >/dev/null
 do
-    if kubectl port-forward svc/wil-playground-service -n dev 8888:8888 > app-port-forward.log 2>&1 & then
-        status=0
-        echo -e "${B_GREEN}Your app is now available at https://localhost:8888"
-    else
-        sleep 10
-    fi
+    kubectl port-forward svc/wil-playground-service -n dev 8888:8888 > app-port-forward.log 2>&1 &
+    sleep 10
 done
+echo -e "${B_GREEN}Your app is now available at https://localhost:8888${RESET}"

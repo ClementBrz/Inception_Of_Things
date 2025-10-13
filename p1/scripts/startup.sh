@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 # Script to setup your VM with all the main dependencies (Vagrant and virtualBox) 
 # for the whole IoT project.
