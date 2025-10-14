@@ -80,9 +80,10 @@ Logs for the app and ArgoCD are stored in there respective port-forward files.
 
 #### P3 : K3d and Argo CD
 - [K3d](https://k3d.io/stable/)
-- [Argo CD - Doc](https://argo-cd.readthedocs.io/en/stable/)
-- [Argo CD - Blog](https://une-tasse-de.cafe/blog/argocd/)
-- [Argo CD - Sokube](https://www.sokube.io/en/blog/gitops-on-a-laptop-with-k3d-and-argocd-en)
+- [ArgoCD - Doc](https://argo-cd.readthedocs.io/en/stable/)
+- [ArgoCD - Blog](https://une-tasse-de.cafe/blog/argocd/)
+- [ArgoCD - Sokube](https://www.sokube.io/en/blog/gitops-on-a-laptop-with-k3d-and-argocd-en)
+- [ArgoCD - Tutorial](https://www.youtube.com/watch?v=MeU5_k9ssrs)
 
 
 sudo kubectl get nodes -o wide
