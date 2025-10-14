@@ -85,6 +85,9 @@ Logs for the app and ArgoCD are stored in there respective port-forward files.
 - [ArgoCD - Sokube](https://www.sokube.io/en/blog/gitops-on-a-laptop-with-k3d-and-argocd-en)
 - [ArgoCD - Tutorial](https://www.youtube.com/watch?v=MeU5_k9ssrs)
 
+#### Bonus : GitLab in K3D
+- [Helm](https://helm.sh/docs/intro/cheatsheet/)
+- [GitLab - self-hosted installation](https://hepapi.github.io/knowledge-hub/devops/gitlab/gitlab-self-hosted-installation/#using-an-existing-cert-manager)
 
 sudo kubectl get nodes -o wide
 sudo cat /var/lib/rancher/k3s/server/token

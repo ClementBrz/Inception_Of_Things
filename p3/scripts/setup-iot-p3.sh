@@ -1,6 +1,7 @@
 #!/bin/bash
 #https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
 
+B_ORANGE="\e[1;34m"
 B_YELLOW="\e[1;33m"
 B_GREEN="\e[1;32m"
 B_GREY="\e[1;30m"
