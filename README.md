@@ -4,25 +4,39 @@
 
 For the projects to work properly, git clone the repo directly in the VM.
 
+#### FYI
+
+> The debian version used in the Vagrantfiles in p1 and p2 is not its latest version because the
+> boxes found in the HashiCorp cloud go up to bookworm64 version of Debian.
+> You can check here: https://portal.cloud.hashicorp.com/vagrant/discover/debian
+
 #### P1:
 
 Before starting p1 you need to run ```p1/scripts/startup.sh``` so that necessary dependencies are installed for the project!
 
-In order to set up the 2 VMs with vagrant (cbernazeS & cbernazeSW) you need to run the commands with "sudo":
+In order to set up the 2 VMs with vagrant (cbernazeS & cbernazeSW), and interact with them, you need to run the commands below in the repo where the Vagrantfile is found:
 
-`sudo vagrant up`
+- Startup the VMs
+`vagrant up`
 
-`sudo vagrant destroy`
+- Shut down the VMs
+`vagrant destroy -g` (-g for grateful shutdown)
 
-`sudo vagrant global-status`
+- Checkout existing VMs
+`vagrant global-status`
 
-`sudo vagrant ssh <vm-name>`
+- Connect to the specified VM using SSH
+`vagrant ssh <vm-name>`
+
+If you want to check that everything asked in the subject works, run this script:
+```./scripts/p1_tests.sh```
 
 > **If there a permission error :** "/opt/vagrant/embedded/gems/gems/vagrant-2.4.9/lib/vagrant/machine.rb:666:in 'write': Permission denied @ rb_sysopen - /home/iot/Inception_Of_Things/p1/.vagrant/machines/cbernazeSW/virtualbox/vagrant_cwd (Errno::EACCES)"
 > **Delete the .vagrant file**
 
 > **If there is this error :**
 > ==> cbernazeS: Running 'pre-boot' VM customizations...A customization command failed:["modifyvm", :id, "--name", "cbernazeS"]The following error was experienced:#<Vagrant::Errors::VBoxManageError:"There was an error while executing `VBoxManage`, a CLI used by Vagrant\nfor controlling VirtualBox. The command and stderr is shown below.\n\nCommand: [\"modifyvm\", \"c5272bf6-a1c5-4783-95a1-7d5cb7e0932f\", \"--name\", \"cbernazeS\"]\n\nStderr: VBoxManage: error: Could not rename the directory '/home/iot/VirtualBox VMs/p1_cbernazeS_1758108675963_6431' to '/home/iot/VirtualBox VMs/cbernazeS' to save the settings file (VERR_ALREADY_EXISTS)\nVBoxManage: error: Details: code NS_ERROR_FAILURE (0x80004005), component SessionMachine, interface IMachine, callee nsISupports\nVBoxManage: error: Context: \"SaveSettings()\" at line 3640 of file VBoxManageModifyVM.cpp\n">Please fix this customization and try again.
+
 > **Check also that all VMs are removed in VirtualBox**
 
 
