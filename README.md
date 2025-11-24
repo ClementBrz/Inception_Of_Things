@@ -63,6 +63,22 @@ Run ```./scripts/setup-iot-p3.sh``` to start this part.
 
 Logs for the app and ArgoCD are stored in there respective port-forward files.
 
+#### Bonus
+
+Helm is the package manager for Kubernetes
+It has a CLI that allows you to add repositories from the ArtifactHub (like DockerHub but for Helm).
+In our case we add gitlab's repository. Once this is done you have access to Helm charts.
+You can then install whatever chart you want. A Helm chart is a package, it has all the dependencies,
+necessary to run an app, a tool, etc.
+A repository is like a database that gives you access to a bunch of charts (packages).
+
+To compare with apt, it's like if you wanted to install python, you first had to get a repository
+containing the existing python packages, then you could install whichever python package you want
+from its repository.
+
+Now with a chart you can create one or more releases. For example if you have MySQL chart, you can create
+several release, each corresponding to a specific database, and you can configure them differently.
+
 ### Documentation
 #### GLOBAL : Kubectl commands cheat sheet
 - [Kubectl](https://spacelift.io/blog/kubernetes-cheat-sheet) & (https://spacelift.io/blog/kubectl-apply-vs-create) & (https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#-strong-getting-started-strong-)
