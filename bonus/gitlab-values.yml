@@ -1,0 +1,12 @@
+global:
+  hosts:
+    domain: localhost
+    externalIP: 127.0.0.1
+  ingress:
+    enabled: true
+    configureCertmanager: false
+certmanager:
+  install: false
+nginx-ingress:
+  enabled: true
+

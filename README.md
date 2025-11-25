@@ -79,6 +79,27 @@ from its repository.
 Now with a chart you can create one or more releases. For example if you have MySQL chart, you can create
 several release, each corresponding to a specific database, and you can configure them differently.
 
+> The helm CLI has 3 main commands:
+> - `helm repo add <repo_name>` allows you to add the repository of your choice to your local machine
+> - `helm search hub` or `helm search repo`: the first searches all repositories on the hub, you can specify what repo you are looking for (for example: `helm search hub gitlab`)
+>   the second one searches for repositories you added locally using `helm repo add`
+> - `helm install <release_name> <chart_name>` is used to install a chart (package) contained in a repo you added to your local helm instance (for example: `helm install gitlab1 gitlab/gitlab`)
+
+To see the status of a specific release you can use `helm status <release_name>`
+`helm show values <chart_name>` shows you the element of configuration you can override for a chart.
+If you want to edit some of those configuration you can write them in a yaml file and then add it to the helm command to install a chart.
+For example `helm install -f value.yaml gitlab/gitlab --generate-name`, this command will create an release of gitlab/gitlab but will override
+only the configurations specified in your yaml file, the rest of the configuration are the default one you were shown earlier using `helm show values [...]`
+`--generate-name` automatically creates a name for your release.
+
+You can upgrade an release, if there is an update on a chart or if you want to change the configuration using `helm upgrade`
+For example: `helm upgrade -f value.yaml <release_name> <chart_name>`
+
+If something breaks in an upgrade or doesn't work as expected you can always go back to a previous version using `helm rollback <release_name> <revision_number>`
+The revision number is the version number of your release (1 correspond to its first version). To see a release's revisions you can use `helm history <release_name>`
+
+`helm uninstall <release_name>` uninstalls the specified release.
+
 ### Documentation
 #### GLOBAL : Kubectl commands cheat sheet
 - [Kubectl](https://spacelift.io/blog/kubernetes-cheat-sheet) & (https://spacelift.io/blog/kubectl-apply-vs-create) & (https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#-strong-getting-started-strong-)

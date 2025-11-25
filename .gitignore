@@ -1,5 +1,5 @@
-p3/app-port-forward.log
-p3/argocd-port-forward.log
+**/app-port-forward.log
+**/argocd-port-forward.log
 **/.vagrant
 **/*.swp
 **/get_helm.sh

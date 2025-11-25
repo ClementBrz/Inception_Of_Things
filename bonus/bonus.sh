@@ -23,12 +23,13 @@ else
     exit 1
 fi
 
-# Install GitLab
+# Add GitLab's helm repository and install gitlab's chart
 helm repo add gitlab https://charts.gitlab.io/
 helm repo update
-helm install gitlab gitlab/gitlab \
-  --set global.hosts.domain=cbernaze.com \
-  --set certmanager-issuer.email=me@cbernaze.com
+helm upgrade --install gitlab-release1 gitlab/gitlab \
+    -f gitlab-values.yml \
+    --create-namespace gitlab \
+    --timeout 600s
 
 $SET_GREY
 echo "Use this password below to login your GitLab instance:${RESET}"
