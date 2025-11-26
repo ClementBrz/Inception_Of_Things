@@ -3,3 +3,5 @@
 **/.vagrant
 **/*.swp
 **/get_helm.sh
+**/.argocd_pass
+**/.gitlab_pass

@@ -184,7 +184,7 @@ do
 done
 echo -e "${B_GREEN}ArgoCD is now available at https://localhost:8080${RESET}"
 
-argocd admin initial-password -n argocd
+argocd admin initial-password -n argocd > .argocd_pass
 
 # Forwarding app's port to be able to access it
 # It is accessible at https://localhost:8888
