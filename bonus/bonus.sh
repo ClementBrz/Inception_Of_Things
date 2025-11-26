@@ -27,12 +27,21 @@ fi
 helm repo add gitlab https://charts.gitlab.io/
 helm repo update
 helm upgrade --install gitlab-release1 gitlab/gitlab \
-    -f gitlab-values.yml \
-    --create-namespace gitlab \
-    --timeout 600s
+  -n gitlab \
+  --create-namespace \
+  -f https://gitlab.com/gitlab-org/charts/gitlab/raw/master/examples/values-minikube-minimum.yaml \
+  --set global.hosts.domain=gitlab.example.com \
+  --set global.hosts.externalIP= \
+  --set global.hosts.https=false \
+  --timeout 100s
+#helm upgrade --install gitlab-release1 gitlab/gitlab \
+#    -f gitlab-values.yml \
+#    --namespace gitlab \
+#    --create-namespace \
+#    --timeout 600s
 
 $SET_GREY
 echo "Use this password below to login your GitLab instance:${RESET}"
-kubectl get secret gitlab-gitlab-initial-root-password -ojsonpath='{.data.password}' | base64 --decode ; echo
+kubectl get secret gitlab-release1-gitlab-initial-root-password -ojsonpath='{.data.password}' | base64 --decode ; echo
 
 kubectl get pods -n gitlab

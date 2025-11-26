@@ -98,7 +98,7 @@ For example: `helm upgrade -f value.yaml <release_name> <chart_name>`
 If something breaks in an upgrade or doesn't work as expected you can always go back to a previous version using `helm rollback <release_name> <revision_number>`
 The revision number is the version number of your release (1 correspond to its first version). To see a release's revisions you can use `helm history <release_name>`
 
-`helm uninstall <release_name>` uninstalls the specified release.
+`helm uninstall <release_name> -n <namespace>` uninstalls the specified release.
 
 ### Documentation
 #### GLOBAL : Kubectl commands cheat sheet
@@ -121,10 +121,12 @@ The revision number is the version number of your release (1 correspond to its f
 - [ArgoCD - Blog](https://une-tasse-de.cafe/blog/argocd/)
 - [ArgoCD - Sokube](https://www.sokube.io/en/blog/gitops-on-a-laptop-with-k3d-and-argocd-en)
 - [ArgoCD - Tutorial](https://www.youtube.com/watch?v=MeU5_k9ssrs)
+- [ArgoCD - Projects](https://argo-cd.readthedocs.io/en/stable/user-guide/projects/)
 
 #### Bonus : GitLab in K3D
 - [Helm](https://helm.sh/docs/intro/cheatsheet/)
 - [GitLab - self-hosted installation](https://hepapi.github.io/knowledge-hub/devops/gitlab/gitlab-self-hosted-installation/#using-an-existing-cert-manager)
+- [Gitlab k3g - gitlab in k3d](https://k3g.gitlab.io/)
 
 sudo kubectl get nodes -o wide
 sudo cat /var/lib/rancher/k3s/server/token

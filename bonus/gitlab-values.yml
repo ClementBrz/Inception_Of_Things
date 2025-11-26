@@ -1,12 +1,13 @@
 global:
+  edition: ce
   hosts:
     domain: localhost
     externalIP: 127.0.0.1
   ingress:
-    enabled: true
     configureCertmanager: false
-certmanager:
+gitlab-runner:
   install: false
-nginx-ingress:
-  enabled: true
+installCertmanager: false
+  #nginx-ingress:
+  #enabled: true
 
