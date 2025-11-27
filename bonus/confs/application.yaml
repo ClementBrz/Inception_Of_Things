@@ -8,7 +8,7 @@ spec:
 
   source:
     #repoURL: https://github.com/ClementBrz/Inception_Of_Things.git
-    repoURL: http://gitlab-release1-webservice-default.gitlab.svc.cluster.local:8181/root/test.git
+    repoURL: http://gitlab-release1-webservice-default.gitlab.svc.cluster.local:8181/root/iot.git
       #targetRevision: HEAD
     path: dev
       #path: p3/confs/dev

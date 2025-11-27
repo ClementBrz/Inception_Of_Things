@@ -1,5 +1,6 @@
 **/app-port-forward.log
 **/argocd-port-forward.log
+**/gitlab-port-forward.log
 **/.vagrant
 **/*.swp
 **/get_helm.sh

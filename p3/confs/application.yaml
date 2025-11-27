@@ -7,9 +7,9 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/ClementBrz/Inception_Of_Things.git
+    repoURL: https://github.com/ClementBrz/cbernaze-iot.git
     targetRevision: HEAD
-    path: p3/confs/dev
+    path: dev
   
   destination:
     server: https://kubernetes.default.svc

@@ -28,6 +28,16 @@ In order to set up the 2 VMs with vagrant (cbernazeS & cbernazeSW), and interact
 - Connect to the specified VM using SSH
 `vagrant ssh <vm-name>`
 
+Uninstalling Servers
+To uninstall K3s from a server node, run:
+
+`/usr/local/bin/k3s-uninstall.sh`
+
+Uninstalling Agents
+To uninstall K3s from an agent node, run:
+
+`/usr/local/bin/k3s-agent-uninstall.sh`
+
 If you want to check that everything asked in the subject works, run this script:
 ```./scripts/p1_tests.sh```
 
@@ -50,6 +60,12 @@ In order to acces app1.com app2.com etc in the browser you need to add them to *
 192.168.56.110 app2.com
 192.168.56.110 app3.com
 ```
+
+Wait a little bit of time once the k3s is running, the pods need to be running, and connect to the different apps like shown below:
+- "http://192.168.56.110" should show app3
+- "http://192.168.56.110:app1.com" should show app1
+- "http://192.168.56.110:app2.com" should show app2
+- "http://192.168.56.110:app3.com" should show app3
 
 #### P3
 
