@@ -29,11 +29,12 @@ helm repo update
 helm upgrade --install gitlab-release1 gitlab/gitlab \
   -n gitlab \
   --create-namespace \
-  -f https://gitlab.com/gitlab-org/charts/gitlab/raw/master/examples/values-minikube-minimum.yaml \
+  -f ../confs/gitlab-values.yml \
   --set global.hosts.domain=gitlab.example.com \
   --set global.hosts.externalIP= \
   --set global.hosts.https=false \
   --timeout 100s
+#  -f https://gitlab.com/gitlab-org/charts/gitlab/raw/master/examples/values-minikube-minimum.yaml \
 #helm upgrade --install gitlab-release1 gitlab/gitlab \
 #    -f gitlab-values.yml \
 #    --namespace gitlab \
