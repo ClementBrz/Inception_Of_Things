@@ -11,10 +11,82 @@ For the projects to work properly, git clone the repo directly in the VM.
 > You can check here: https://portal.cloud.hashicorp.com/vagrant/discover/debian
 
 #### P1:
+If you run into this error :
+There was an error while executing `VBoxManage`, a CLI used by Vagrant
+for controlling VirtualBox. The command and stderr is shown below.
+
+Command: ["startvm", "81b9bfda-b357-496a-aad1-23ca0513f6d0", "--type", "headless"]
+
+Stderr: VBoxManage: error: VirtualBox can't operate in VMX root mode. Please disable the KVM kernel extension, recompile your kernel and reboot (VERR_VMX_IN_VMX_ROOT_MODE)
+VBoxManage: error: Details: code NS_ERROR_FAILURE (0x80004005), component ConsoleWrap, interface IConsole
+
+You need to do this:
+
+Option 1 — Disable KVM inside the inner Ubuntu VM
+
+This forces VirtualBox to fall back to software virtualization.
+
+1. Stop KVM modules
+sudo systemctl stop libvirtd
+sudo modprobe -r kvm_intel kvm
+
+2. Permanently blacklist KVM
+
+Create a blacklist file:
+
+echo -e "blacklist kvm\nblacklist kvm_intel" | sudo tee /etc/modprobe.d/blacklist-kvm.conf
+
+
+Then reboot:
+
+sudo reboot
+
+
+Now VirtualBox inside your VM should work (slower, but functional).
+
+Option 2: Check that the nested virtualization is enabled, run the following command on your host machine:
+`VBoxManage modifyvm "Your_Ubuntu_VM_Name" --nested-hw-virt on`
+
+Switch to Libvirt (KVM/QEMU) for Vagrant
+This is the most reliable solution for running Vagrant inside a VM. Libvirt (KVM/QEMU) handles nested virtualization much better than VirtualBox.
+Install and Configure Libvirt
+Run these commands inside your Ubuntu VM:
+
+Install KVM and Libvirt:
+
+```
+sudo apt-get update
+sudo apt-get install -y qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virt-manager libvirt-dev
+```
+
+Add your user to the libvirt and kvm groups:
+
+```
+sudo usermod -aG libvirt $(whoami)
+sudo usermod -aG kvm $(whoami)
+```
+
+Log out and log back in (or restart the VM) for group changes to take effect.
+
+Install the Vagrant Libvirt Plugin:
+
+`vagrant plugin install vagrant-libvirt`
+
+Create or modify your Vagrantfile to use libvirt:
+
+```
+Vagrant.configure("2") do |config|
+  config.vm.box = "generic/ubuntu2204"
+  config.vm.provider :libvirt
+```
+
+Start your Vagrant VM:
+`vagrant up --provider=libvirt`
+
 
 Before starting p1 you need to run ```p1/scripts/startup.sh``` so that necessary dependencies are installed for the project!
 
-In order to set up the 2 VMs with vagrant (cbernazeS & cbernazeSW), and interact with them, you need to run the commands below in the repo where the Vagrantfile is found:
+#####In order to set up the 2 VMs with vagrant (cbernazeS & cbernazeSW), and interact with them, you need to run the commands below in the repo where the Vagrantfile is found:
 
 - Startup the VMs
 `vagrant up`
@@ -60,6 +132,7 @@ In order to acces app1.com app2.com etc in the browser you need to add them to *
 192.168.56.110 app2.com
 192.168.56.110 app3.com
 ```
+`curl -H "Host:app2.com" 192.168.56.110`
 
 Wait a little bit of time once the k3s is running, the pods need to be running, and connect to the different apps like shown below:
 - "http://192.168.56.110" should show app3
@@ -68,6 +141,9 @@ Wait a little bit of time once the k3s is running, the pods need to be running, 
 - "http://192.168.56.110:app3.com" should show app3
 
 #### P3
+
+If you run the setup-iot-p3 script for the first time, you will probably need to restart your VM in order for the addition of your user to docker's group
+to take effect.
 
 To create a k3d cluster use this command:
 ```k3d cluster create mycluster```
